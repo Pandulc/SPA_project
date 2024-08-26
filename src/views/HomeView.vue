@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div>
+        <h1>Lista de Productos</h1>
+        <ProductList v-if="loading == false && error == null" />
+        <p v-if="loading">Cargando productos...</p>
+        <p v-if="error">{{ error }}</p>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { useProductStore } from '@/store/productStore.js';
+import ProductList from '@/components/ProductList.vue';
+import { onMounted } from 'vue';
 
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+    components: {
+        ProductList,
+    },
+    setup() {
+        const productStore = useProductStore();
+
+        onMounted(() => {
+            productStore.fetchProducts();
+        });
+
+        return {
+            loading: productStore.loading,
+            error: productStore.error,
+        };
+    },
+};
 </script>
