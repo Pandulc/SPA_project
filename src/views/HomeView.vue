@@ -1,32 +1,34 @@
 <template>
-    <div>
-        <h1>Lista de Productos</h1>
-        <ProductList v-if="loading == false && error == null" />
-        <p v-if="loading">Cargando productos...</p>
-        <p v-if="error">{{ error }}</p>
-    </div>
+  <div>
+    <h1>Lista de Productos</h1>
+    <ProductList v-if="loading == false && error == null" />
+    <p v-if="loading">Cargando productos...</p>
+    <p v-if="error">{{ error }}</p>
+  </div>
 </template>
 
 <script>
-import { useProductStore } from '@/store/productStore.js';
-import ProductList from '@/components/ProductList.vue';
-import { onMounted } from 'vue';
+  import { useProductStore } from "@/store/productStore.js";
+  import ProductList from "@/components/ProductList.vue";
+  import { onMounted } from "vue";
 
-export default {
+  export default {
     components: {
-        ProductList,
+      ProductList,
     },
     setup() {
-        const productStore = useProductStore();
+      const productStore = useProductStore();
 
-        onMounted(() => {
-            productStore.fetchProducts();
-        });
+      onMounted(() => {
+        if (productStore.products.length === 0) {
+          productStore.fetchProducts();
+        }
+      });
 
-        return {
-            loading: productStore.loading,
-            error: productStore.error,
-        };
+      return {
+        loading: productStore.loading,
+        error: productStore.error,
+      };
     },
-};
+  };
 </script>

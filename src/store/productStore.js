@@ -30,7 +30,7 @@ export const useProductStore = defineStore('productStore', {
           'Content-Type': 'application/json'
         }
       });
-      this.products.push(response.data);
+      this.products.push(product);
     },
 
     async deleteProduct(id) {
@@ -39,7 +39,6 @@ export const useProductStore = defineStore('productStore', {
     },
 
     async updateProduct(product) {
-
       const response = await axios.put(`https://fakestoreapi.com/products/${product.id}`, product, {
         headers: {
           'Content-Type': 'application/json'
@@ -57,6 +56,6 @@ export const useProductStore = defineStore('productStore', {
 
   getters: {
     // Getter opcional para filtrar productos o hacer otras operaciones
-    productById: (state) => (id) => state.products.find((product) => product.id === id),
+    getProductById: (state) => (id) => state.products.find((product) => product.id === id),
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Agregar Producto</h1>
-    <ProductForm />
+    <ProductForm :isEditing="false"/>
   </div>
 </template>
 
